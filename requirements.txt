@@ -1,2 +1,3 @@
 python-dotenv
 cvat-sdk
+tqdm
