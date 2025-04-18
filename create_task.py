@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import json
 from pathlib import Path
 from typing import Iterable, List
 
@@ -68,11 +69,13 @@ def create_task_and_upload(
                 ),
                 x_organization=os.getenv("CVAT_ORGANIZATION"),
             )
+    
 
             # 2 Prepare the data payload
             data_req = models.DataRequest(
                 image_quality=image_quality,
                 client_files=file_handles,
+         
             )
 
             # 3 Upload the images in the same session
@@ -99,7 +102,7 @@ if __name__ == "__main__":
     TASK_NAME  = "FACE 2"         # descriptive name
     IMAGES_FOLDER     = '/Users/naxalov/github/cradle/face-recognition-benchmark/images'
 
-
     IMAGES = [str(p) for p in Path(IMAGES_FOLDER).glob("*.jpg")]
 
+    
     create_task_and_upload(PROJECT_ID, TASK_NAME, IMAGES)
