@@ -52,6 +52,8 @@ def create_task_and_upload(
         password=os.getenv("CVAT_PASSWORD"),
     )
 
+
+
     file_handles = open_images(image_paths)
 
     try:
@@ -61,8 +63,10 @@ def create_task_and_upload(
                 models.TaskWriteRequest(
                     name=task_name,
                     project_id=project_id,
-                    segment_size=0,     # let CVAT split jobs automatically
-                )
+                    segment_size=50,  
+                    overlap=10,
+                ),
+                x_organization=os.getenv("CVAT_ORGANIZATION"),
             )
 
             # 2 Prepare the data payload
@@ -91,9 +95,9 @@ def create_task_and_upload(
 
 
 if __name__ == "__main__":
-    PROJECT_ID = 18                          # 🔁 ← your existing project ID
+    PROJECT_ID = 17                          # 🔁 ← your existing project ID
     TASK_NAME  = "FACE 2"         # descriptive name
-    IMAGES_FOLDER     = ''
+    IMAGES_FOLDER     = '/Users/naxalov/github/cradle/face-recognition-benchmark/images'
 
 
     IMAGES = [str(p) for p in Path(IMAGES_FOLDER).glob("*.jpg")]
